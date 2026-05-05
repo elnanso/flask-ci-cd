@@ -1,0 +1,25 @@
+docker network create tp-network
+
+docker run -d \
+--name mariadb-db \
+--network tp-network \
+-e MARIADB_ROOT_PASSWORD=root \
+-e MARIADB_DATABASE=testdb \
+-e MARIADB_USER=appuser \
+-e MARIADB_PASSWORD=apppassword \
+-v mariadb-data:/var/lib/mysql \
+mariadb:11
+
+docker exec -it mariadb-db mariadb -u appuser -p
+# Mot de passe : apppasswords
+
+
+USE testdb;
+
+CREATE TABLE items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255)
+);
+
+# Quitter :
+exit;
